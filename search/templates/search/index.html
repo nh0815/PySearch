@@ -9,12 +9,22 @@
 	<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
 </head>
 <body>
-	<div class="container">
-		<div class="jumbotron">
-			<h1>Welcome to PySearch!</h1>
-			<p>A toy search engine written in Python</p>
-			<p>Type a query below</p>
-		</div>
+<div class="container">
+	<div class="jumbotron">
+		<h1>Welcome to PySearch!</h1>
+		<p>A toy search engine written in Python</p>
+		<p>Type a query below</p>
 	</div>
+</div>
+
+<div class="container">
+	<form class="form-inline" role="form">
+		<div class="form-group">
+			<label for="query" class="control-label">Query</label>
+			<input type="text" class="form-control input-lg" name="query" id="query"/>
+			<button type="button" role="button" class="btn btn-lg btn-primary">Search</button>
+		</div>
+	</form>
+</div>
 </body>
 </html>
