@@ -130,12 +130,18 @@ class DocumentLengthTable:
 	def __len__(self):
 		return len(self.table)
 
+	def read(self, filename):
+		with open(filename) as f:
+			lines = f.readlines()
+		for line in lines:
+			docid, length = line.split(' ')
+			self.table[docid] = length
+
 	def write(self, filename='default.dlt'):
 		with open(filename, 'w') as f:
 			for docid in self.table:
 				line = '%s %d\n' % (docid, self.table[docid])
 				f.write(line)
-
 
 	def add(self, docid, length):
 		self.table[docid] = length
@@ -171,4 +177,8 @@ def build_data_structures(corpus):
 if __name__ == '__main__':
 	wft = WordFrequencyTable()
 	wft.read('../index/freq.txt')
-	print wft.get_frequency('or')
+	print wft.get_frequency('or'),
+
+	dlt = DocumentLengthTable()
+	dlt.read('../index/length.txt')
+	print dlt.get_length('344')
