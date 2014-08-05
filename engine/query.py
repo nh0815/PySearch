@@ -8,25 +8,12 @@ import operator
 
 
 class QueryProcessor:
-	def __init__(self, queries, idx, dlt, ft, score_function='BM25'):
+	def __init__(self, queries, idx, dlt, ft):
 		self.queries = queries
 		#self.index, self.ft, self.dlt = build_data_structures(corpus)
 		self.idx_file = idx
 		self.dlt = dlt
 		self.ft = ft
-		self.score_function = score_function
-
-	def run(self):
-		results = []
-		qid = 0
-		for query in self.queries:
-			if self.score_function == 'BM25':
-				results.append(self.run_BM25(query))
-			elif self.score_function == 'Query Likelihood':
-				print 'running query %d' % qid
-				qid += 1
-				results.append(self.run_query_likelihood(query))
-		return results
 
 	def run_query_likelihood(self, query):
 		mu = 2000
