@@ -101,13 +101,6 @@ class WordFrequencyTable:
 				line = '%s %d\n' % (word, self.table[word])
 				f.write(line)
 
-	def to_db(self):
-		docs = []
-		for word in self.table:
-			doc = {'_id': word, 'freq': self.table[word]}
-			docs.append(doc)
-		data = {'docs': docs}
-		db.bulk_load('word_freq', data)
 
 	def get_frequency(self, word):
 		if word in self.table:
@@ -135,14 +128,6 @@ class DocumentLengthTable:
 			for docid in self.table:
 				line = '%s %d\n' % (docid, self.table[docid])
 				f.write(line)
-
-	def to_db(self):
-		docs = []
-		for docid in self.table:
-			doc = {'_id': docid, 'freq': self.table[docid]}
-			docs.append(doc)
-		data = {'docs': docs}
-		db.bulk_load('doc_freq', data)
 
 
 	def add(self, docid, length):
