@@ -17,7 +17,8 @@ input.form-control{
 
 .table-container{
 	margin-top: 50px;
-	overflow-y: auto;
+	max-height: 450px;
+	overflow-y: scroll;
 }
 
 .disabled{
