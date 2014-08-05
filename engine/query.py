@@ -38,7 +38,7 @@ class QueryProcessor:
 		mu_result = OrderedDict()  # collect document rankings for this value of mu
 		for term in query:
 			print 'searching index'
-			index = self.db.get_term_frequency(term)
+			index = self.db.get(term)
 			if index:  # check if word is in index
 				print 'found word in index:', index['_id']
 				print 'scoring documents'
@@ -47,11 +47,7 @@ class QueryProcessor:
 				print index['index']
 				for docid, f in index['index'].iteritems():
 					docs.add(docid)
-					doc_count = self.db.get_doc_count('doc_freq')
-					terms = self.db.get('word_freq/_all_docs')
-					for term in terms['rows']:
-						print term['key']
-					score = score_query_likelihood(f=float(f), mu=mu, c=self.ft.get_frequency(term), C=len(self.ft), D=doc_count)
+					score = score_query_likelihood(f=float(f), mu=mu, c=self.ft.get_frequency(term), C=len(self.ft), D=len(self.dlt))
 					if docid in mu_result:
 						mu_result[docid] += score  # document has partial score
 					else:
