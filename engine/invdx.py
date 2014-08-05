@@ -181,4 +181,4 @@ if __name__ == '__main__':
 
 	dlt = DocumentLengthTable()
 	dlt.read('../index/length.txt')
-	print dlt.get_length('344')
+	print dlt.get_length('344'),
