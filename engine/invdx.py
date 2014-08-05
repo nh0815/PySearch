@@ -95,6 +95,13 @@ class WordFrequencyTable:
 			result += self.table[word]
 		return result
 
+	def read(self, filename):
+		with open(filename) as f:
+			lines = f.readlines()
+		for line in lines:
+			word, freq = line.split(' ')
+			self.table[word] = freq
+
 	def write(self, filename='default.ft'):
 		with open(filename, 'w') as f:
 			for word in self.table:
@@ -159,3 +166,9 @@ def build_data_structures(corpus):
 		length = len(corpus[str(docid)])
 		dlt.add(docid, length)
 	return idx, ft, dlt
+
+
+if __name__ == '__main__':
+	wft = WordFrequencyTable()
+	wft.read('../index/freq.txt')
+	print wft.get_frequency('or')
