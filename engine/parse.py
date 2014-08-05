@@ -17,7 +17,7 @@ class CorpusParser:
 		for x in blobs:
 			text = x.split()
 			docid = text.pop(0)
-			self.corpus[docid] = text
+			self.corpus[docid] = ' '.join(text[1:])
 
 	def get_corpus(self):
 		return self.corpus
