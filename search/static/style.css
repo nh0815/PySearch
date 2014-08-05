@@ -14,3 +14,12 @@ div.form-group{
 input.form-control{
 	width: 85% !important;
 }
+
+.table-container{
+	margin-top: 50px;
+	overflow-y: auto;
+}
+
+.disabled{
+	display: none;
+}
