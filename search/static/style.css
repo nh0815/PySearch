@@ -21,6 +21,11 @@ input.form-control{
 	overflow-y: scroll;
 }
 
+#result-body tr:hover{
+	font-weight: bold;
+	cursor: pointer;
+}
+
 .disabled{
 	display: none;
 }
