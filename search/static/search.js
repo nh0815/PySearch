@@ -1,6 +1,8 @@
 $(document).ready(function(){
 	$('#form').submit(function(e){
 		e.preventDefault();
+		var spinner = $('<i class="fa fa-spinner fa-spin spinner"></i>');
+		$('#submit').html(spinner);
 		var query = $('#query').val();
 		var docs = [];
 		$.get('/search/query/', {query: query}, function(data){
@@ -28,6 +30,7 @@ $(document).ready(function(){
 				$('#result-body').append(row);
 			}
 			$('#result-table').removeClass('disabled');
+			$('#submit').html('Search');
 		});
 	});
 });
