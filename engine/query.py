@@ -8,8 +8,7 @@ import operator
 
 
 class QueryProcessor:
-	def __init__(self, queries, idx, dlt, ft):
-		self.queries = queries
+	def __init__(self, idx, dlt, ft):
 		#self.index, self.ft, self.dlt = build_data_structures(corpus)
 		self.idx_file = idx
 		self.dlt = dlt
