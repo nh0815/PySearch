@@ -1,6 +1,9 @@
 $(document).ready(function(){
 	$('#form').submit(function(e){
 		e.preventDefault();
-		alert('submit');
+		var query = $('#query').val();
+		$.get('/search/query/', {query: query}, function(data){
+			alert(data);
+		});
 	});
 });
