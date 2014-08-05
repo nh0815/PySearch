@@ -21,6 +21,7 @@ $(document).ready(function(){
 			for(var i = 0; i < length; i++){
 				var doc = docs[i];
 				var row = $('<tr></tr>');
+				row.attr('id', doc['doc']);
 				var rank = $('<td></td>').text(i+1);
 				var docid = $('<td></td>').text(doc['doc']);
 				var score = $('<td></td>').text(doc['score']);
@@ -31,6 +32,20 @@ $(document).ready(function(){
 			}
 			$('#result-table').removeClass('disabled');
 			$('#submit').html('Search');
+			$('tr td').click(function(){
+				var id = $(this).parent().attr('id');
+				console.log(id);
+				$.get('/search/document/', {doc: id}, function(bytes){
+					var data = JSON.parse(bytes);
+					var text = data.text;
+					$('#modal-header h2').html(id);
+					$('#modal-body').html(text);
+					$('#modal-footer button').click(function(){
+						$('#modal').modal('hide');
+					});
+					$('#modal').modal();
+				});
+			});
 		});
 	});
 });
