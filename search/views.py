@@ -19,5 +19,4 @@ def index(request):
 def query(request):
 	query = request.GET.get('query').split(' ')
 	results = proc.run_query_likelihood(query)
-	print results
-	return HttpResponse(dumps(query))
+	return HttpResponse(dumps(results))
