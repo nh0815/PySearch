@@ -100,7 +100,7 @@ class WordFrequencyTable:
 			lines = f.readlines()
 		for line in lines:
 			word, freq = line.split(' ')
-			self.table[word] = freq
+			self.table[word] = int(freq)
 
 	def write(self, filename='default.ft'):
 		with open(filename, 'w') as f:
@@ -135,7 +135,7 @@ class DocumentLengthTable:
 			lines = f.readlines()
 		for line in lines:
 			docid, length = line.split(' ')
-			self.table[docid] = length
+			self.table[docid] = int(length)
 
 	def write(self, filename='default.dlt'):
 		with open(filename, 'w') as f:
