@@ -7,5 +7,5 @@ def index(request):
 	return render(request, 'search/index.html', {})
 
 def query(request):
-	query = request.GET.get('asdf')
+	query = request.GET.get('query')
 	return HttpResponse(query)
