@@ -15,7 +15,19 @@ $(document).ready(function(){
 			docs.sort(function(a, b){
 				return b.score-a.score;
 			});
-			console.log(docs);
+			var length = docs.length;
+			for(var i = 0; i < length; i++){
+				var doc = docs[i];
+				var row = $('<tr></tr>');
+				var rank = $('<td></td>').text(i+1);
+				var docid = $('<td></td>').text(doc['doc']);
+				var score = $('<td></td>').text(doc['score']);
+				row.append(rank);
+				row.append(docid);
+				row.append(score);
+				$('#result-body').append(row);
+			}
+			$('#result-table').removeClass('disabled');
 		});
 	});
 });
