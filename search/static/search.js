@@ -3,7 +3,7 @@ $(document).ready(function(){
 		e.preventDefault();
 		var query = $('#query').val();
 		$.get('/search/query/', {query: query}, function(data){
-			alert(data);
+			console.log(data);
 		});
 	});
 });
