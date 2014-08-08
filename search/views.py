@@ -4,6 +4,7 @@ from json import dumps
 from engine.query import QueryProcessor
 from engine.invdx import InvertedIndex, DocumentLengthTable, WordFrequencyTable
 from engine.parse import CorpusParser
+from engine.db import cursor
 import os
 
 # Create your views here.
@@ -32,6 +33,15 @@ def query(request):
 
 
 def doc(request):
-	docid = str(request.GET.get('doc'))
-	text = {'text': docs[docid]}
+	docid = int(request.GET.get('doc'))
+	curs = cursor()
+	curs.execute('SELECT text FROM Document WHERE docid="%d"' % docid)
+	doc_text, = curs.fetchone()
+	text = {'text': doc_text}
 	return HttpResponse(dumps(text))
+
+
+if __name__ == '__main__':
+	cp = CorpusParser('index/corpus.txt')
+	cp.parse()
+	docs = cp.get_corpus()
