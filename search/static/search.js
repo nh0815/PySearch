@@ -17,6 +17,7 @@ $(document).ready(function(){
 			docs.sort(function(a, b){
 				return b.score-a.score;
 			});
+			$('tbody').html('');
 			var length = docs.length;
 			for(var i = 0; i < length; i++){
 				var doc = docs[i];
