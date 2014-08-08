@@ -5,6 +5,7 @@ from invdx import build_data_structures
 from rank import *
 from collections import OrderedDict
 import operator
+from db import cursor
 
 
 class QueryProcessor:
@@ -19,38 +20,45 @@ class QueryProcessor:
 		print 'query:', query
 		print "running query with mu=%d" % mu
 		result = OrderedDict()  # collect document rankings for this value of mu
+		curs = cursor()
+		curs.execute('SELECT SUM(frequency) FROM Word')
+		C, = curs.fetchone()
+		curs.execute('SELECT COUNT(DISTINCT docid) FROM Document')
+		D, = curs.fetchone()
 		for term in query:
-			with open(self.idx_file, buffering=1000000000) as idx:
-				print 'searching index'
-				for line in idx:
-					tmp = line.split()
-					word = tmp.pop(0)
-					freq = [tuple(x.split('-')) for x in tmp]
-					if term == word:
-						print 'found word in index:', word
-						docs = set()
+			print 'searching index'
+			curs.execute('SELECT docid, freq FROM Entry WHERE word="%s"' % term)
+			rows = curs.fetchall()
+			print rows
+			print 'found word in index:', term
+			docs = set()
+			print 'scoring documents'
+			#score documents that contain term
+			for docid, f in rows:
+				docs.add(docid)
+				curs.execute('SELECT frequency FROM Word WHERE word="%s"' % term)
+				c, = curs.fetchone()
+				score = score_query_likelihood(f=float(f), mu=mu, c=c, C=C, D=D)
+				print term, docid, f, score
+				print score
+				if docid in result:
+					result[docid] += score
+				else:
+					result[docid] = score
 
-						print 'scoring documents'
-						#score documents that contain term
-						for docid, f in freq:
-							docs.add(docid)
-							score = score_query_likelihood(f=float(f), mu=mu, c=self.ft.get_frequency(term), C=len(self.ft), D=len(self.dlt))
-							if docid in result:
-								result[docid] += score
-							else:
-								result[docid] = score
-
-						print 'scoring other documents'
-						#score documents that don't contain term
-						tmp = [str(x) for x in range(len(self.dlt))]
-						s = set(tmp).difference(docs)
-						score = score_query_likelihood(f=0, mu=mu, c=self.ft.get_frequency(term), C=len(self.ft), D=len(self.dlt))
-						for docid in s:
-							if docid in result:
-								result[docid] += score
-							else:
-								result[docid] = score
-						break
+			print 'scoring other documents'
+			#score documents that don't contain term
+			tmp = [str(x) for x in range(D)]
+			s = set(tmp).difference(docs)
+			curs.execute('SELECT frequency FROM Word WHERE word="%s"' % term)
+			c, = curs.fetchone()
+			score = score_query_likelihood(f=0, mu=mu, c=c, C=C, D=D)
+			print score
+			for docid in s:
+				if docid in result:
+					result[docid] += score
+				else:
+					result[docid] = score
 		return result
 
 '''
