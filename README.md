@@ -6,6 +6,7 @@ PySearch
 - Performs no query processing, e.g. stemming, removing stopwords (yet)
 - Uses Django for backend, jQuery/Bootstrap in front end
 - Inverted index stored in MySQL database, along with full document text
+- Collection was given as part of an assignment, pre-stemmed, so searches aren't very informative
 
 To run
 ======
